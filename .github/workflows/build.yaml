@@ -1,0 +1,24 @@
+name: CI
+# https://github.com/actions/virtual-environments
+on:
+  push:
+    branches: [ mcsps ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: |
+          export TAG=`git describe --match=$(git rev-parse --short=8 HEAD) --always --dirty --abbrev=8`
+          docker login -u="${DOCKER_USERNAME}" -p="${DOCKER_PASSWORD}" docker.io
+          docker build -t mcsps/spekt8:$TAG --rm .
+          docker push mcsps/spekt8:$TAG
+        env:
+          DOCKER_USERNAME: ${{secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+

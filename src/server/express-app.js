@@ -42,7 +42,7 @@ app.get('/main.js', (req, res) => {
 });
 
 app.get('/pod', (req, res) => {
-  k8sApi.listNamespacedPod('default')
+  k8sApi.listPodForAllNamespaces
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -52,7 +52,7 @@ app.get('/pod', (req, res) => {
 });
 
 app.get('/service', (req, res) => {
-  k8sApi.listNamespacedService('default')
+  k8sApi.listServiceForAllNamespaces
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -62,7 +62,7 @@ app.get('/service', (req, res) => {
 });
 
 app.get('/ingress', (req, res) => {
-  k8sApi2.listNamespacedIngress('default')
+  k8sApi2.listIngressForAllNamespaces
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -72,7 +72,7 @@ app.get('/ingress', (req, res) => {
 });
 
 app.get('/deployment', (req, res) => {
-  k8sApi2.listNamespacedDeployment('default')
+  k8sApi2.listDeploymentForAllNamespaces('default')
     .then((re) => {
       return res.status(200).json(re.body);
     })
@@ -82,7 +82,7 @@ app.get('/deployment', (req, res) => {
 });
 
 app.get('/daemonset', (req, res) => {
-  k8sApi2.listNamespacedDaemonSet('default')
+  k8sApi2.listDaemonSetForAllNamespaces('default')
     .then((re) => {
       res.json(re.body);
     })
